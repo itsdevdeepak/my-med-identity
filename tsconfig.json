@@ -6,7 +6,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "moduleResolution": "nodenext",
-    "resolveJsonModule": true
+    "moduleResolution": "node"
   }
 }

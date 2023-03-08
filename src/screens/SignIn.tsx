@@ -1,10 +1,10 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-const Home = () => (
+const SignIn = () => (
   <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Sign In</Text>
       <StatusBar />
     </View>
   </SafeAreaView>
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default SignIn;
