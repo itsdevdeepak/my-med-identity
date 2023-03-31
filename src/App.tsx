@@ -8,6 +8,9 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 import AppNavigator from './navigation/AppNavigator';
+import { View } from 'react-native';
+import { COLORS } from './constants/theme';
+import { StatusBar } from 'expo-status-bar';
 
 const App = () => {
   const [poppinsLoaded] = usePoppins({
@@ -20,7 +23,10 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <AppNavigator />
+      <View style={{ backgroundColor: COLORS.primary, flex: 1 }}>
+        <AppNavigator />
+        <StatusBar backgroundColor={COLORS.primary} />
+      </View>
     </NavigationContainer>
   );
 };

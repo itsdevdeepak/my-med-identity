@@ -1,11 +1,10 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 const SignUp = () => (
   <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
       <Text>Sign Up</Text>
-      <StatusBar />
     </View>
   </SafeAreaView>
 );
