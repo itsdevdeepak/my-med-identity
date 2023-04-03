@@ -9,11 +9,11 @@ const COLORS = {
 
 const SIZES = {
   xSmall: 10,
-  small: 12,
-  medium: 16,
-  large: 20,
-  xLarge: 24,
-  xxLarge: 32,
+  small: 13,
+  medium: 13,
+  large: 16,
+  xLarge: 21,
+  xxLarge: 26,
 };
 
 const FONT = {

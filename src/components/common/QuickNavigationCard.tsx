@@ -16,21 +16,21 @@ const CardStyles = StyleSheet.create({
     margin: 10,
   },
   content: {
+    width: 130,
+    height: 130,
     justifyContent: 'center',
     alignItems: 'center',
-    maxWidth: 135,
-    minHeight: 135,
   },
   cardTextContainer: {
     width: '100%',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 10,
+    // padding: 5,
+    minHeight: 45,
     paddingHorizontal: 10,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    marginTop: 'auto',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignSelf: 'flex-end',
   },
 });
@@ -52,17 +52,18 @@ const QuickNavigationCard = ({
       onPress={onPress}
       style={[CardStyles.container, SHADOWS.medium]}
     >
-      <View style={CardStyles.content}>
+      <View style={[CardStyles.content]}>
         <View
-          style={{
-            marginBottom: 'auto',
-            marginTop: 'auto',
-          }}
+          style={{ flex: 4, justifyContent: 'center', alignItems: 'center' }}
         >
-          <Icon name={icon} width={75} height={75} />
+          <Icon name={icon} width={60} height={60} />
         </View>
-        <View style={CardStyles.cardTextContainer}>
-          <Text numberOfLines={1} bold style={{ color: COLORS.secondary }}>
+        <View style={[CardStyles.cardTextContainer]}>
+          <Text
+            numberOfLines={2}
+            bold
+            style={{ color: COLORS.secondary, textAlign: 'center' }}
+          >
             {cardTitle}
           </Text>
         </View>

@@ -1,22 +1,26 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { COLORS } from '../constants/theme';
-
-const Home = () => (
-  <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      <Text>Home</Text>
-    </View>
-  </SafeAreaView>
-);
+import { Header, QuickNavigation, RecentRecords } from '../components/home';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 15,
   },
+  scrollView: {},
 });
+
+const Home = () => (
+  <SafeAreaView style={styles.container}>
+    <Header />
+    <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
+      <QuickNavigation />
+      <RecentRecords />
+    </ScrollView>
+  </SafeAreaView>
+);
 
 export default Home;

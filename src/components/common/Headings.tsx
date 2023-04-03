@@ -10,6 +10,7 @@ import { FONT, SIZES } from '../../constants/theme';
 const TextStyles = StyleSheet.create({
   text: {
     fontFamily: FONT.regular,
+    fontSize: SIZES.medium,
   },
   bold: {
     fontFamily: FONT.bold,
@@ -21,7 +22,7 @@ const TextStyles = StyleSheet.create({
     fontSize: SIZES.xLarge,
   },
   headingSmall: {
-    fontSize: SIZES.medium,
+    fontSize: SIZES.large,
   },
 });
 

@@ -15,7 +15,7 @@ const ListItemStyles = StyleSheet.create({
     width: '100%',
     borderRadius: 8,
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   listIcon: {},
   content: { flexDirection: 'row', alignItems: 'center', gap: 5 },
@@ -39,7 +39,7 @@ const RecordListItem = ({ title, tagLine, onPress }: ListItemsProps) => {
     >
       <View style={[ListItemStyles.content]}>
         <View style={[ListItemStyles.listIcon]}>
-          <Icon name="file" height={50} width={50} fill={COLORS.secondary} />
+          <Icon name="file" height={52} width={52} fill={COLORS.secondary} />
         </View>
         <View>
           <HeadingThree
@@ -50,7 +50,7 @@ const RecordListItem = ({ title, tagLine, onPress }: ListItemsProps) => {
           </HeadingThree>
           <Text
             style={{
-              lineHeight: 15,
+              lineHeight: 20,
               color: COLORS.neturalLight,
               fontSize: SIZES.small,
             }}
@@ -59,7 +59,7 @@ const RecordListItem = ({ title, tagLine, onPress }: ListItemsProps) => {
           </Text>
         </View>
         <View style={ListItemStyles.itemInTheEnd}>
-          <Icon name="chevron-right" fill={COLORS.secondary} />
+          <Icon name="chevronRight" fill={COLORS.secondary} />
         </View>
       </View>
     </TouchableHighlight>
