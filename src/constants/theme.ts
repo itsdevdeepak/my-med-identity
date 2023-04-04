@@ -9,8 +9,8 @@ const COLORS = {
 
 const SIZES = {
   xSmall: 10,
-  small: 13,
-  medium: 13,
+  small: 12,
+  medium: 14,
   large: 16,
   xLarge: 21,
   xxLarge: 26,

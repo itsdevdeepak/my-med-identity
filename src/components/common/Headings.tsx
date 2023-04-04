@@ -38,7 +38,7 @@ const Text = (props: TextPropsWithChildren) => {
   return (
     <NativeText
       numberOfLines={props.numberOfLines}
-      style={[TextStyles.text, props.style, props.bold && TextStyles.bold]}
+      style={[TextStyles.text, props.bold && TextStyles.bold, props.style]}
     >
       {props.children}
     </NativeText>

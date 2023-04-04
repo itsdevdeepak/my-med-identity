@@ -1,7 +1,12 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { COLORS } from '../constants/theme';
-import { Header, QuickNavigation, RecentRecords } from '../components/home';
+import {
+  Banner,
+  Header,
+  QuickNavigation,
+  RecentRecords,
+} from '../components/home';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,6 +22,7 @@ const Home = () => (
   <SafeAreaView style={styles.container}>
     <Header />
     <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
+      <Banner />
       <QuickNavigation />
       <RecentRecords />
     </ScrollView>
