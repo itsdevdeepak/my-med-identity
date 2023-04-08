@@ -19,9 +19,9 @@ const OptionStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 10,
-    padding: 8,
+    padding: 5,
+    paddingHorizontal: 10,
     minWidth: 60,
-    margin: 8,
   },
   activeContainer: {
     backgroundColor: COLORS.tertiary,
@@ -49,10 +49,7 @@ const Option = ({ onPress, children, toggle = false }: OptionProps) => {
       ]}
     >
       <View>
-        <Text
-          bold={toggle}
-          style={[OptionStyles.text, toggle && OptionStyles.activeText]}
-        >
+        <Text style={[OptionStyles.text, toggle && OptionStyles.activeText]}>
           {children}
         </Text>
       </View>

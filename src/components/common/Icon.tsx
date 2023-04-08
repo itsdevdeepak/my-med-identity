@@ -13,6 +13,7 @@ import MoreIcon from '../../../assets/icons/more.svg';
 import SearchIcon from '../../../assets/icons/search.svg';
 import SliderIcon from '../../../assets/icons/slider.svg';
 import UserMenuIcon from '../../../assets/icons/user-menu.svg';
+import CloseIcon from '../../../assets/icons/close.svg';
 
 export type IconName =
   | 'file'
@@ -26,7 +27,8 @@ export type IconName =
   | 'more'
   | 'search'
   | 'slider'
-  | 'userMenu';
+  | 'userMenu'
+  | 'close';
 
 const Icon = ({
   name,
@@ -131,6 +133,14 @@ const Icon = ({
     case 'userMenu':
       return (
         <UserMenuIcon
+          fill={fill ?? 'white'}
+          width={width ?? 30}
+          height={height ?? 30}
+        />
+      );
+    case 'close':
+      return (
+        <CloseIcon
           fill={fill ?? 'white'}
           width={width ?? 30}
           height={height ?? 30}

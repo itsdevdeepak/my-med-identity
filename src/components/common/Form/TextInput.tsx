@@ -6,7 +6,7 @@ import {
   type StyleProp,
   type TextStyle,
 } from 'react-native';
-import { COLORS, SHADOWS, SIZES } from '../../../constants/theme';
+import { COLORS, SIZES } from '../../../constants/theme';
 
 type TextInputType = 'password' | 'number' | 'text';
 
@@ -24,7 +24,7 @@ const textInputStyles = StyleSheet.create({
   input: {
     backgroundColor: COLORS.primary,
     padding: 8,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     borderRadius: 8,
     color: COLORS.neturalDark,
     fontSize: SIZES.medium,
@@ -41,11 +41,12 @@ const TextInput = ({
     <View style={textInputStyles.container}>
       <NativeTextInput
         placeholderTextColor={COLORS.neturalLight}
-        style={[textInputStyles.input, SHADOWS.small, style && style]}
+        style={[textInputStyles.input, style && style]}
         placeholder={placeholder ?? ''}
         secureTextEntry={type === 'password'}
         keyboardType={type !== 'number' ? 'default' : 'numeric'}
         value={value}
+        cursorColor={COLORS.neturalLight}
       />
     </View>
   );

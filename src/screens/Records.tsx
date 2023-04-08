@@ -1,11 +1,12 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { COLORS } from '../constants/theme';
+import { Search } from '../components/records';
 
 const Records = () => (
   <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
-      <Text>Records</Text>
+      <Search />
     </View>
   </SafeAreaView>
 );
@@ -14,8 +15,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 15,
   },
 });
 
