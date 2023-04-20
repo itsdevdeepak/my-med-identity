@@ -15,6 +15,7 @@ type TextInputProps = {
   placeholder?: string;
   value?: string;
   style?: StyleProp<TextStyle>;
+  disable?: boolean;
 };
 
 const textInputStyles = StyleSheet.create({
@@ -24,7 +25,7 @@ const textInputStyles = StyleSheet.create({
   input: {
     backgroundColor: COLORS.primary,
     padding: 8,
-    // paddingHorizontal: 10,
+    paddingHorizontal: 15,
     borderRadius: 8,
     color: COLORS.neturalDark,
     fontSize: SIZES.medium,
@@ -36,6 +37,7 @@ const TextInput = ({
   placeholder,
   style,
   value,
+  disable,
 }: TextInputProps) => {
   return (
     <View style={textInputStyles.container}>
@@ -47,6 +49,8 @@ const TextInput = ({
         keyboardType={type !== 'number' ? 'default' : 'numeric'}
         value={value}
         cursorColor={COLORS.neturalLight}
+        editable={!disable}
+        selectTextOnFocus={!disable}
       />
     </View>
   );

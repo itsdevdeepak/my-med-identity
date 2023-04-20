@@ -19,11 +19,12 @@ const TagStyles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 8,
+    paddingHorizontal: 10,
     minWidth: 60,
-    margin: 8,
   },
   text: {
     textAlign: 'center',
+    lineHeight: 20,
     fontSize: SIZES.small,
   },
 });
