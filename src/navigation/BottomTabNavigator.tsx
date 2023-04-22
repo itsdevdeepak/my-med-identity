@@ -4,6 +4,7 @@ import Home from '../screens/Home';
 import Records from '../screens/Records';
 import Profile from '../screens/Profile';
 import { TabBar } from '../components/TabBar';
+import Record from '../screens/Record';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -17,6 +18,7 @@ const BottomTabNavigator = () => {
       <Screen name="Home" component={Home} />
       <Screen name="Records" component={Records} />
       <Screen name="Profile" component={Profile} />
+      <Screen name="Record" component={Record} />
     </Navigator>
   );
 };

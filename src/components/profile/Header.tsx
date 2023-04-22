@@ -1,13 +1,8 @@
-import React, { PropsWithChildren, useState } from 'react';
-import {
-  GestureResponderEvent,
-  Image,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { HeadingTwo, Icon, Text } from '../common';
 import { COLORS, SIZES } from '../../constants/theme';
+import { OptionMenu } from '../common/OptionMenu';
 
 type HeaderProps = {
   name: string;
@@ -39,18 +34,7 @@ const headerStyles = StyleSheet.create({
     top: 10,
     flexDirection: 'row-reverse',
   },
-  optionMenu: {
-    marginTop: 10,
-    minWidth: 70,
-  },
 
-  menuItem: {
-    padding: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    width: '100%',
-    color: COLORS.neturalDark,
-  },
   nameText: {
     marginTop: 10,
     color: COLORS.netural,
@@ -63,42 +47,6 @@ const headerStyles = StyleSheet.create({
     lineHeight: 15,
   },
 });
-
-const OptionMenuItem = ({
-  name,
-  onPress,
-  danger,
-}: {
-  name: string;
-  onPress: (event: GestureResponderEvent) => void;
-  danger?: boolean;
-}) => {
-  return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        {
-          backgroundColor: pressed ? '#eee' : '#fff',
-        },
-      ]}
-    >
-      <Text style={[headerStyles.menuItem, danger && { color: '#FF3636' }]}>
-        {name}
-      </Text>
-    </Pressable>
-  );
-};
-
-const OptionMenu = ({
-  children,
-  hidden,
-}: PropsWithChildren<{ hidden?: boolean }>) => {
-  return (
-    <View style={[headerStyles.optionMenu, hidden && { display: 'none' }]}>
-      {children}
-    </View>
-  );
-};
 
 const Header = ({ name, email, isEditableHook }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -137,7 +85,7 @@ const Header = ({ name, email, isEditableHook }: HeaderProps) => {
           <Icon name="more" fill={COLORS.neturalLight} />
         </Pressable>
         <OptionMenu hidden={!isMenuOpen}>
-          <OptionMenuItem
+          <OptionMenu.Item
             name={isEditable ? 'Cancle Editing' : 'Edit'}
             onPress={() => {
               setIsEditable(!isEditable);
@@ -145,7 +93,7 @@ const Header = ({ name, email, isEditableHook }: HeaderProps) => {
               return;
             }}
           />
-          <OptionMenuItem
+          <OptionMenu.Item
             danger
             name="Logout"
             onPress={() => setIsMenuOpen(false)}

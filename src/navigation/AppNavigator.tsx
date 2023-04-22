@@ -3,7 +3,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import AuthNavigator from './AuthNavigator';
 
 const AppNavigator = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   return isLoggedIn ? <BottomTabNavigator /> : <AuthNavigator />;
 };
 

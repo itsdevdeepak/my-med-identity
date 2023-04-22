@@ -15,6 +15,8 @@ const TabBarItem = ({
   onPress: (event: GestureResponderEvent) => void;
 }) => {
   let iconName = 'home' as IconName;
+  if (itemName === 'Record') return;
+
   if (itemName === 'Records') {
     iconName = 'calendarPlus';
   } else if (itemName === 'Profile') {
