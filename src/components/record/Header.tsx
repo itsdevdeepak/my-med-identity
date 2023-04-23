@@ -25,7 +25,8 @@ const HeaderStyles = StyleSheet.create({
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigation = useNavigation<TabNavigationProps<'Record'>>();
+  const navigation =
+    useNavigation<TabNavigationProps<'Record'>['navigation']>();
   return (
     <View style={HeaderStyles.container}>
       <Pressable

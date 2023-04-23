@@ -97,15 +97,10 @@ const Button = ({
   );
 };
 
-const PrimaryButton = ({ icon, large, children }: ButtonPropsWithChildren) => {
+const PrimaryButton = (props: ButtonPropsWithChildren) => {
   return (
-    <Button
-      icon={icon}
-      large={large}
-      style={{ backgroundColor: COLORS.tertiary }}
-      underlayColor="#1595b9"
-    >
-      {children}
+    <Button {...props} style={{ backgroundColor: COLORS.tertiary }}>
+      {props.children}
     </Button>
   );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Label, TextInput } from '../components/common/Form';
 import {
+  Button,
   HeadingThree,
   HeadingTwo,
   Icon,
@@ -11,7 +12,9 @@ import {
 import { COLORS, SIZES } from '../constants/theme';
 import { AuthNavigationProps } from '../navigation/types';
 
-const SignUp = ({ navigation }: AuthNavigationProps<'SignUp'>) => {
+const AdditionalDetails = ({
+  navigation,
+}: AuthNavigationProps<'AdditionalDetails'>) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -48,46 +51,32 @@ const SignUp = ({ navigation }: AuthNavigationProps<'SignUp'>) => {
           </View>
           <View style={{ marginBottom: 15 }}>
             <View style={styles.inputContainer}>
-              <Label style={{ marginBottom: 5 }}>Name</Label>
-              <TextInput placeholder="Name" />
+              <Label style={{ marginBottom: 5 }}>Age</Label>
+              <TextInput placeholder="Age" />
             </View>
             <View style={styles.inputContainer}>
-              <Label style={{ marginBottom: 5 }}>Email</Label>
-              <TextInput placeholder="Email" />
+              <Label style={{ marginBottom: 5 }}>Blood Group</Label>
+              <TextInput placeholder="Blood Group" />
             </View>
             <View style={styles.inputContainer}>
-              <Label style={{ marginBottom: 5 }}>SSN</Label>
-              <TextInput placeholder="SSN" />
+              <Label style={{ marginBottom: 5 }}>Height</Label>
+              <TextInput placeholder="Height" />
             </View>
             <View style={styles.inputContainer}>
-              <Label style={{ marginBottom: 5 }}>Password</Label>
-              <TextInput placeholder="Password" />
+              <Label style={{ marginBottom: 5 }}>Weight</Label>
+              <TextInput placeholder="Weight" />
             </View>
           </View>
-          <PrimaryButton
-            onPress={() => navigation.navigate('AdditionalDetails')}
+          <Button
+            onPress={() => 0}
+            style={{ backgroundColor: COLORS.neturalLight, marginBottom: 15 }}
+            underlayColor="#476170"
           >
-            Sign Up
+            Skip for Now
+          </Button>
+          <PrimaryButton onPress={() => navigation.navigate('SignUp')}>
+            Submit
           </PrimaryButton>
-          <View
-            style={{
-              marginVertical: 15,
-              flexDirection: 'row',
-              alignSelf: 'center',
-            }}
-          >
-            <Text>Already have an Account, </Text>
-            <Pressable
-              onPress={() => navigation.navigate('SighIn')}
-              style={({ pressed }) => [
-                { backgroundColor: pressed ? '#eee' : '#fff' },
-              ]}
-            >
-              <Text bold style={{ color: COLORS.tertiary }}>
-                Sign In
-              </Text>
-            </Pressable>
-          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -117,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default AdditionalDetails;

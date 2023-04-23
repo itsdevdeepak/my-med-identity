@@ -5,8 +5,9 @@ import Records from '../screens/Records';
 import Profile from '../screens/Profile';
 import { TabBar } from '../components/TabBar';
 import Record from '../screens/Record';
+import { TabParamList } from './types';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator<TabParamList>();
 
 const BottomTabNavigator = () => {
   return (
