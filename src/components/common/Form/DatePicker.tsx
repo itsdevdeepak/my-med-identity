@@ -22,13 +22,18 @@ const datePickerStyles = StyleSheet.create({
   },
   text: {
     color: COLORS.neturalDark,
+    textAlignVertical: 'center',
   },
   button: {
     width: '30%',
   },
 });
 
-const DatePicker = () => {
+const DatePicker = ({
+  handleChange,
+}: {
+  handleChange: (date: Date) => void;
+}) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -37,8 +42,11 @@ const DatePicker = () => {
     selectedDate: Date = new Date()
   ) => {
     const currentDate = selectedDate;
+    // console.log(selectedDate);
+
     setShow(false);
     setDate(currentDate);
+    handleChange(currentDate);
   };
   return (
     <View style={[datePickerStyles.container, SHADOWS.small]}>

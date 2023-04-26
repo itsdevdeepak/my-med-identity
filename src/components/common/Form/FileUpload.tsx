@@ -22,6 +22,7 @@ const fileUploadStyles = StyleSheet.create({
   text: {
     flex: 2,
     paddingLeft: 2,
+    textAlignVertical: 'center',
   },
   button: { width: '20%' },
 });

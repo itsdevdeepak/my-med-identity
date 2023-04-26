@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { HeadingThree, PrimaryButton, Tag } from '../common';
 import { COLORS, SHADOWS } from '../../constants/theme';
 import { Label, TextInput } from '../common/Form';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { User, updateUser } from '../../features/user/userSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 const userInfoStyle = StyleSheet.create({
   container: {
@@ -25,20 +28,32 @@ const userInfoStyle = StyleSheet.create({
   },
 });
 
-const AccountInfo = ({ isEditable }: { isEditable: boolean }) => {
-  const user = {
-    name: 'Depz XD',
-    email: 'me@depz.com',
-    mobileNo: 9099999999,
-    dob: '02-02-2022',
-  };
+type AccountInfoFormHooks = {
+  nameHook: [string, Dispatch<React.SetStateAction<string>>];
+  emailHook: [string, Dispatch<React.SetStateAction<string>>];
+  mobileNoHook: [string, Dispatch<React.SetStateAction<string>>];
+  dobHook: [string, Dispatch<React.SetStateAction<string>>];
+};
+
+const AccountInfo = ({
+  isEditable,
+  formHooks,
+}: {
+  isEditable: boolean;
+  formHooks: AccountInfoFormHooks;
+}) => {
+  const [name, setName] = formHooks.nameHook;
+  const [email, setEmail] = formHooks.emailHook;
+  const [mobileNo, setMobileNo] = formHooks.mobileNoHook;
+  const [dob, setDob] = formHooks.dobHook;
   return (
     <View style={userInfoStyle.container}>
       <View style={userInfoStyle.item}>
         <Label>Name</Label>
         <TextInput
           disable={!isEditable}
-          value={user.name}
+          value={name}
+          onChangeText={(text) => setName(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -50,7 +65,8 @@ const AccountInfo = ({ isEditable }: { isEditable: boolean }) => {
         <Label>Email</Label>
         <TextInput
           disable={!isEditable}
-          value={user.email}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -62,7 +78,8 @@ const AccountInfo = ({ isEditable }: { isEditable: boolean }) => {
         <Label>Mobile Number</Label>
         <TextInput
           disable={!isEditable}
-          value={user.mobileNo.toString()}
+          value={mobileNo}
+          onChangeText={(text) => setMobileNo(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -74,7 +91,8 @@ const AccountInfo = ({ isEditable }: { isEditable: boolean }) => {
         <Label>Date Of Birth</Label>
         <TextInput
           disable={!isEditable}
-          value={user.dob}
+          value={dob}
+          onChangeText={(text) => setDob(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -86,28 +104,58 @@ const AccountInfo = ({ isEditable }: { isEditable: boolean }) => {
   );
 };
 
-const MedicalInfo = ({ isEditable }: { isEditable: boolean }) => {
-  const user = {
-    bloodGroup: 'A',
-    weight: '500',
-    height: '6.5',
-    allergies: ['allergie 1', 'allergie 2', 'allergie 3'],
-  };
+type MedicalInfoFormHooks = {
+  bloodGroupHook: [string, Dispatch<React.SetStateAction<string>>];
+  heightHook: [string, Dispatch<React.SetStateAction<string>>];
+  weightHook: [string, Dispatch<React.SetStateAction<string>>];
+  allergiesHook: [string, Dispatch<React.SetStateAction<string>>];
+};
+
+const MedicalInfo = ({
+  isEditable,
+  formHooks,
+}: {
+  isEditable: boolean;
+  formHooks: MedicalInfoFormHooks;
+}) => {
+  const [bloodGroup, setBloodGroup] = formHooks.bloodGroupHook;
+  const [height, setHeight] = formHooks.heightHook;
+  const [weight, setWeight] = formHooks.weightHook;
+  const [allergies, setAllergies] = formHooks.allergiesHook;
+
   return (
     <View style={userInfoStyle.container}>
-      <View style={userInfoStyle.item}>
-        <Label>Allergies</Label>
-        <View style={userInfoStyle.tags}>
-          {user.allergies.map((allergy, index) => (
-            <Tag key={index}>{allergy}</Tag>
-          ))}
+      {allergies && !isEditable && (
+        <View style={userInfoStyle.item}>
+          <Label>Allergies</Label>
+          <View style={userInfoStyle.tags}>
+            {allergies.split(',').map((allergy, index) => (
+              <Tag key={index}>{allergy}</Tag>
+            ))}
+          </View>
         </View>
-      </View>
+      )}
+      {isEditable && (
+        <View style={userInfoStyle.item}>
+          <Label>Allergies</Label>
+          <TextInput
+            disable={!isEditable}
+            value={allergies}
+            onChangeText={(text) => setAllergies(text)}
+            style={[
+              isEditable
+                ? userInfoStyle.inputEnabled
+                : userInfoStyle.inputDisabled,
+            ]}
+          />
+        </View>
+      )}
       <View style={userInfoStyle.item}>
         <Label>Blood Group</Label>
         <TextInput
           disable={!isEditable}
-          value={user.bloodGroup}
+          value={bloodGroup}
+          onChangeText={(text) => setBloodGroup(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -119,7 +167,8 @@ const MedicalInfo = ({ isEditable }: { isEditable: boolean }) => {
         <Label>Height</Label>
         <TextInput
           disable={!isEditable}
-          value={user.height}
+          value={height}
+          onChangeText={(text) => setHeight(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -131,7 +180,8 @@ const MedicalInfo = ({ isEditable }: { isEditable: boolean }) => {
         <Label>Weight</Label>
         <TextInput
           disable={!isEditable}
-          value={user.weight}
+          value={weight}
+          onChangeText={(text) => setWeight(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -166,7 +216,63 @@ const UserDetails = ({
   isEditableHook: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 }) => {
   const [isAccountInfo, setIsAccountInfo] = useState(true);
-  const isEditable = isEditableHook[0];
+  const [isEditable, setIsEditable] = isEditableHook;
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [mobileNo, setMobileNo] = useState(user.mobileNo);
+  const [dob, setDob] = useState(user.dob);
+  const [bloodGroup, setBloodGroup] = useState(user.bloodGroup);
+  const [height, setHeight] = useState(user.height);
+  const [weight, setWeight] = useState(user.weight);
+  const [allergies, setAllergies] = useState(
+    user.allergies ? user.allergies.join(',') : ''
+  );
+
+  const medicalInfoHooks: MedicalInfoFormHooks = {
+    bloodGroupHook: [bloodGroup, setBloodGroup],
+    heightHook: [height, setHeight],
+    weightHook: [weight, setWeight],
+    allergiesHook: [allergies, setAllergies],
+  };
+
+  const accountInfoHooks: AccountInfoFormHooks = {
+    nameHook: [name, setName],
+    emailHook: [email, setEmail],
+    mobileNoHook: [mobileNo, setMobileNo],
+    dobHook: [dob, setDob],
+  };
+
+  const resetForm = (user: User) => {
+    setName(user.name);
+    setEmail(user.email);
+    setMobileNo(user.mobileNo);
+    setDob(user.dob);
+    setBloodGroup(user.bloodGroup);
+    setHeight(user.height);
+    setWeight(user.weight);
+    setAllergies(user.allergies.join(','));
+  };
+
+  const submitForm = () => {
+    const updatedUser: User = {
+      id: nanoid(),
+      name: name ? name : user.name,
+      allergies: allergies ? allergies.trim().split(',') : user.allergies,
+      bloodGroup: bloodGroup ? bloodGroup : user.bloodGroup,
+      dob: dob ? dob : user.dob,
+      email: email ? email : user.email,
+      height: height ? height : user.height,
+      mobileNo: mobileNo ? mobileNo : user.mobileNo,
+      weight: weight ? weight : user.weight,
+    };
+    const a = dispatch(updateUser(updatedUser));
+    console.log(a);
+
+    resetForm(updatedUser);
+    setIsEditable(false);
+  };
   return (
     <View style={[userDetailStyles.container]}>
       <View style={userDetailStyles.tabs}>
@@ -212,15 +318,21 @@ const UserDetails = ({
         </Pressable>
       </View>
       {isAccountInfo ? (
-        <AccountInfo isEditable={isEditable} />
+        <AccountInfo isEditable={isEditable} formHooks={accountInfoHooks} />
       ) : (
-        <MedicalInfo isEditable={isEditable} />
+        <MedicalInfo isEditable={isEditable} formHooks={medicalInfoHooks} />
       )}
-      <View
-        style={{ paddingHorizontal: 20, display: isEditable ? 'flex' : 'none' }}
-      >
-        <PrimaryButton large>Save</PrimaryButton>
-      </View>
+      {isEditable && (
+        <View
+          style={{
+            paddingHorizontal: 20,
+          }}
+        >
+          <PrimaryButton large onPress={submitForm}>
+            Save
+          </PrimaryButton>
+        </View>
+      )}
     </View>
   );
 };

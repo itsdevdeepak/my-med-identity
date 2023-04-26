@@ -1,15 +1,40 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { COLORS } from '../constants/theme';
-import { Search } from '../components/records';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { COLORS, SHADOWS } from '../constants/theme';
+import { RecordForm, Search } from '../components/records';
+import { useAppSelector } from '../utils/hooks';
+import { HeadingTwo, PrimaryButton, RecordList } from '../components/common';
 
-const Records = () => (
-  <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      <Search />
-    </View>
-  </SafeAreaView>
-);
+const Records = () => {
+  const [isFormVisible, setIsFormVisible] = useState(true);
+  const records = useAppSelector((state) => state.records).entities;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
+          <Search />
+          {isFormVisible && <RecordForm setFormVisibility={setIsFormVisible} />}
+          <View>
+            <HeadingTwo style={{ color: COLORS.netural }} bold>
+              All Records
+            </HeadingTwo>
+            <RecordList records={records} />
+          </View>
+          {!isFormVisible && (
+            <PrimaryButton
+              style={{ marginTop: 20, ...SHADOWS.medium }}
+              onPress={() => {
+                setIsFormVisible(true);
+              }}
+            >
+              Add New Record
+            </PrimaryButton>
+          )}
+        </ScrollView>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -10,6 +10,8 @@ import {
 import AppNavigator from './navigation/AppNavigator';
 import { StatusBar, View } from 'react-native';
 import { COLORS } from './constants/theme';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   const [poppinsLoaded] = usePoppins({
@@ -22,10 +24,15 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <View style={{ backgroundColor: COLORS.primary, flex: 1 }}>
-        <AppNavigator />
-        <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.primary} />
-      </View>
+      <Provider store={store}>
+        <View style={{ backgroundColor: COLORS.primary, flex: 1 }}>
+          <AppNavigator />
+          <StatusBar
+            barStyle={'dark-content'}
+            backgroundColor={COLORS.primary}
+          />
+        </View>
+      </Provider>
     </NavigationContainer>
   );
 };

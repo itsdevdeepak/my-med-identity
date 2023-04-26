@@ -16,6 +16,7 @@ type TextInputProps = {
   value?: string;
   style?: StyleProp<TextStyle>;
   disable?: boolean;
+  onChangeText?: (text: string) => void;
 };
 
 const textInputStyles = StyleSheet.create({
@@ -38,10 +39,12 @@ const TextInput = ({
   style,
   value,
   disable,
+  onChangeText,
 }: TextInputProps) => {
   return (
     <View style={textInputStyles.container}>
       <NativeTextInput
+        onChangeText={onChangeText}
         placeholderTextColor={COLORS.neturalLight}
         style={[textInputStyles.input, style && style]}
         placeholder={placeholder ?? ''}

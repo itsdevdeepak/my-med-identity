@@ -5,6 +5,9 @@ import { COLORS, SHADOWS } from '../../constants/theme';
 import { useNavigation } from '@react-navigation/native';
 import { type TabNavigationProps } from '../../navigation/types';
 import { OptionMenu } from '../common/OptionMenu';
+import { RecordType } from './types';
+import { useDispatch } from 'react-redux';
+import { removeRecord } from '../../features/records/recordsSlice';
 
 const HeaderStyles = StyleSheet.create({
   container: {
@@ -23,14 +26,17 @@ const HeaderStyles = StyleSheet.create({
   },
 });
 
-const Header = () => {
+const Header = ({ id }: { id: RecordType['id'] }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dispatch = useDispatch();
   const navigation =
     useNavigation<TabNavigationProps<'Record'>['navigation']>();
   return (
     <View style={HeaderStyles.container}>
       <Pressable
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          setIsMenuOpen(false), navigation.goBack();
+        }}
         style={({ pressed }) => [
           { backgroundColor: pressed ? '#eee' : '#fff' },
         ]}
@@ -48,7 +54,15 @@ const Header = () => {
         </Pressable>
         <View style={{ display: isMenuOpen ? 'flex' : 'none' }}>
           <OptionMenu>
-            <OptionMenu.Item danger onPress={() => 0} name="Delete" />
+            <OptionMenu.Item
+              danger
+              onPress={() => {
+                dispatch(removeRecord(id)),
+                  setIsMenuOpen(false),
+                  navigation.goBack();
+              }}
+              name="Delete"
+            />
           </OptionMenu>
         </View>
       </View>

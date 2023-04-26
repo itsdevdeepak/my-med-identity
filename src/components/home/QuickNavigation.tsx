@@ -2,6 +2,8 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { HeadingTwo, QuickNavigationCard } from '../common';
 import { COLORS } from '../../constants/theme';
+import { useNavigation } from '@react-navigation/native';
+import { TabNavigationProps } from '../../navigation/types';
 
 const quickNavigationStyles = StyleSheet.create({
   container: {
@@ -20,6 +22,7 @@ const data = [
 ];
 
 const QuickNavigation = () => {
+  const navigation = useNavigation<TabNavigationProps<'Home'>['navigation']>();
   return (
     <View style={quickNavigationStyles.container}>
       <HeadingTwo bold style={quickNavigationStyles.heading}>
@@ -28,7 +31,11 @@ const QuickNavigation = () => {
       <FlatList
         data={data}
         renderItem={({ item }) => (
-          <QuickNavigationCard cardTitle={item.name} icon={'file'} />
+          <QuickNavigationCard
+            onPress={() => navigation.navigate('Records')}
+            cardTitle={item.name}
+            icon={'file'}
+          />
         )}
         horizontal
         overScrollMode="never"

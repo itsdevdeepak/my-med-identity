@@ -1,4 +1,5 @@
 export type RecordType = {
+  id?: string;
   name: string;
   tagName: string;
   discription?: string;

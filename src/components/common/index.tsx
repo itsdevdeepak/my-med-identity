@@ -5,3 +5,4 @@ export * from './RecordListItem';
 export * from './QuickNavigationCard';
 export * from './Tag';
 export * from './Option';
+export * from './RecordList';
