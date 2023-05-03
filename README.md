@@ -1,10 +1,12 @@
+<div align="center">
+  <img src=".github/images/logo.png" />
+</div>
+
 # My Med Identity
 
 My Med Identity is a personilized Mobile app that lets you store and manage your personal medical Records.
 
-<div align="center">
-  <img src=".github/images/logo.png" />
-</div>
+
 
 ## Run Locally
 
