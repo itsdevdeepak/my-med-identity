@@ -1,14 +1,14 @@
 # My Med Identity
 
-My Med Identity is aPersonilized Mobile app that lets you store and manage your personal medical Records.
+My Med Identity is a personilized Mobile app that lets you store and manage your personal medical Records.
 
-<div style="text-align:center">
+<div align="center">
   <img src=".github/images/logo.png" />
-</div>.
+</div>
 
 ## Run Locally
 
-[**Setup Backend 🔗**]("https://github.com/itsdevdeepak/my-med-identity-backend")
+[**Setup Backend 🔗**](https://github.com/itsdevdeepak/my-med-identity-backend)
 <br>
 
 Clone the project
