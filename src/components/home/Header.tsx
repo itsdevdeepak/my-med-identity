@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
 import { HeadingThree } from '../common';
 import { COLORS, SHADOWS } from '../../constants/theme';
+import { useUser } from '../../utils/hooks';
+import { Gender } from '../../features/auth/authSlice';
 
 const headerStyles = StyleSheet.create({
   container: {
@@ -30,14 +32,13 @@ const headerStyles = StyleSheet.create({
 const Header = () => {
   const bgMale = '#12d9e3';
   const bgFemale = '#babffc';
-  const name = 'Depz';
-  const gender = 'male';
+  const user = useUser();
 
   return (
     <View style={[headerStyles.container, SHADOWS.small]}>
       <View>
         <HeadingThree bold style={headerStyles.heading}>
-          Hello, {name}
+          Hello, {user.name}
         </HeadingThree>
         <Text style={headerStyles.tagLine}>Welcome back!</Text>
       </View>
@@ -51,7 +52,13 @@ const Header = () => {
           <Image
             style={[
               { height: '100%', width: '100%' },
-              { backgroundColor: gender === 'male' ? bgMale : bgFemale },
+              {
+                backgroundColor: user.gender
+                  ? user.gender === Gender.MALE
+                    ? bgMale
+                    : bgFemale
+                  : Gender.MALE,
+              },
             ]}
             source={require('../../../assets/images/men-profile-pic.png')}
           />

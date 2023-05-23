@@ -27,7 +27,7 @@ const RecentRecords = () => {
       {records.map((record, idx) => (
         <RecordListItem
           title={record.name}
-          tagLine={record.tagName}
+          tagLine={record.date}
           key={idx}
           onPress={() =>
             navigation.navigate('Record', {

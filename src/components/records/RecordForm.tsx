@@ -3,9 +3,8 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { HeadingTwo, Icon, PrimaryButton, Text } from '../common';
 import { COLORS, SHADOWS } from '../../constants/theme';
 import { DatePicker, FileUpload, Label, TextInput } from '../common/Form';
+import { createRecord } from '../../features/records/recordsAction';
 import { useAppDispatch } from '../../utils/hooks';
-import { addRecord } from '../../features/records/recordsSlice';
-import { nanoid } from '@reduxjs/toolkit';
 
 const recordFormStyles = StyleSheet.create({
   container: {
@@ -33,7 +32,7 @@ const RecordForm = ({
 }) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState(new Date());
-  const [descricption, setDescricption] = useState('');
+  const [description, setDescription] = useState('');
   const [allergies, setAllergies] = useState('');
   const [error, setError] = useState('');
 
@@ -42,7 +41,7 @@ const RecordForm = ({
   const resetForm = () => {
     setError('');
     setName('');
-    setDescricption('');
+    setDescription('');
     setAllergies('');
   };
 
@@ -55,18 +54,18 @@ const RecordForm = ({
       setError('Please Provide Valid Date');
       return;
     }
-    if (!descricption) {
+    if (!description) {
       setError('Please Enter Valid Description');
       return;
     }
     const sanitizedAllergies = allergies.split(',');
     dispatch(
-      addRecord({
-        id: nanoid(),
+      createRecord({
         name,
-        discription: descricption,
+        description: description,
         allergies: sanitizedAllergies,
-        tagName: date.toDateString(),
+        date: date.toISOString(),
+        fileUrl: 'https://localhost.com',
       })
     );
     resetForm();
@@ -121,8 +120,8 @@ const RecordForm = ({
         <View style={recordFormStyles.formItem}>
           <Label>Description</Label>
           <TextInput
-            value={descricption}
-            onChangeText={(text) => setDescricption(text)}
+            value={description}
+            onChangeText={(text) => setDescription(text)}
             placeholder="Description"
           />
         </View>

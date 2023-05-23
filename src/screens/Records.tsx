@@ -6,7 +6,7 @@ import { useAppSelector } from '../utils/hooks';
 import { HeadingTwo, PrimaryButton, RecordList } from '../components/common';
 
 const Records = () => {
-  const [isFormVisible, setIsFormVisible] = useState(true);
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const records = useAppSelector((state) => state.records).entities;
   return (
     <SafeAreaView style={{ flex: 1 }}>

@@ -5,6 +5,7 @@ const COLORS = {
   neturalLight: '#385364',
   netural: '#146C94',
   neturalDark: '#112938',
+  red: '#FF3636',
 };
 
 const SIZES = {

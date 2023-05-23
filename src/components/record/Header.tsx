@@ -5,9 +5,8 @@ import { COLORS, SHADOWS } from '../../constants/theme';
 import { useNavigation } from '@react-navigation/native';
 import { type TabNavigationProps } from '../../navigation/types';
 import { OptionMenu } from '../common/OptionMenu';
-import { RecordType } from './types';
-import { useDispatch } from 'react-redux';
-import { removeRecord } from '../../features/records/recordsSlice';
+import { Record, removeRecord } from '../../features/records/recordsAction';
+import { useAppDispatch } from '../../utils/hooks';
 
 const HeaderStyles = StyleSheet.create({
   container: {
@@ -26,9 +25,9 @@ const HeaderStyles = StyleSheet.create({
   },
 });
 
-const Header = ({ id }: { id: RecordType['id'] }) => {
+const Header = ({ id }: { id: Record['id'] }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation =
     useNavigation<TabNavigationProps<'Record'>['navigation']>();
   return (

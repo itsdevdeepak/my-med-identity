@@ -29,6 +29,9 @@ Install dependencies
   npm install
 ```
 
+Add Enviroment Variables
+rename .env.sample to .env and add your api url in .env
+
 Start the server
 
 ```bash

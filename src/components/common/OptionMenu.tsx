@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import { Text } from '../common';
-import { COLORS, SIZES } from '../../constants/theme';
+import { COLORS } from '../../constants/theme';
 
 const optionMenuStyles = StyleSheet.create({
   optionMenu: {

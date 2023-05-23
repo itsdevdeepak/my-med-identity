@@ -21,7 +21,6 @@ const App = () => {
   });
 
   if (!poppinsLoaded) return null;
-
   return (
     <NavigationContainer>
       <Provider store={store}>

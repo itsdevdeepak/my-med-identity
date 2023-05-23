@@ -3,9 +3,12 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { HeadingThree, PrimaryButton, Tag } from '../common';
 import { COLORS, SHADOWS } from '../../constants/theme';
 import { Label, TextInput } from '../common/Form';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
-import { User, updateUser } from '../../features/user/userSlice';
-import { nanoid } from '@reduxjs/toolkit';
+import { useAppDispatch, useUser } from '../../utils/hooks';
+import { BloodGroup, User } from '../../features/auth/authSlice';
+import {
+  UserUpdateAttribute,
+  updateUser,
+} from '../../features/auth/authActions';
 
 const userInfoStyle = StyleSheet.create({
   container: {
@@ -31,8 +34,8 @@ const userInfoStyle = StyleSheet.create({
 type AccountInfoFormHooks = {
   nameHook: [string, Dispatch<React.SetStateAction<string>>];
   emailHook: [string, Dispatch<React.SetStateAction<string>>];
-  mobileNoHook: [string, Dispatch<React.SetStateAction<string>>];
-  dobHook: [string, Dispatch<React.SetStateAction<string>>];
+  mobileNumberHook: [string, Dispatch<React.SetStateAction<string>>];
+  dateOfBirthHook: [string, Dispatch<React.SetStateAction<string>>];
 };
 
 const AccountInfo = ({
@@ -44,8 +47,8 @@ const AccountInfo = ({
 }) => {
   const [name, setName] = formHooks.nameHook;
   const [email, setEmail] = formHooks.emailHook;
-  const [mobileNo, setMobileNo] = formHooks.mobileNoHook;
-  const [dob, setDob] = formHooks.dobHook;
+  const [mobileNumber, setMobileNumber] = formHooks.mobileNumberHook;
+  const [dateOfBirth, setDateOfBirth] = formHooks.dateOfBirthHook;
   return (
     <View style={userInfoStyle.container}>
       <View style={userInfoStyle.item}>
@@ -78,8 +81,8 @@ const AccountInfo = ({
         <Label>Mobile Number</Label>
         <TextInput
           disable={!isEditable}
-          value={mobileNo}
-          onChangeText={(text) => setMobileNo(text)}
+          value={mobileNumber}
+          onChangeText={(text) => setMobileNumber(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -91,8 +94,8 @@ const AccountInfo = ({
         <Label>Date Of Birth</Label>
         <TextInput
           disable={!isEditable}
-          value={dob}
-          onChangeText={(text) => setDob(text)}
+          value={dateOfBirth}
+          onChangeText={(text) => setDateOfBirth(text)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -105,7 +108,7 @@ const AccountInfo = ({
 };
 
 type MedicalInfoFormHooks = {
-  bloodGroupHook: [string, Dispatch<React.SetStateAction<string>>];
+  bloodGroupHook: [BloodGroup, Dispatch<React.SetStateAction<BloodGroup>>];
   heightHook: [string, Dispatch<React.SetStateAction<string>>];
   weightHook: [string, Dispatch<React.SetStateAction<string>>];
   allergiesHook: [string, Dispatch<React.SetStateAction<string>>];
@@ -155,7 +158,7 @@ const MedicalInfo = ({
         <TextInput
           disable={!isEditable}
           value={bloodGroup}
-          onChangeText={(text) => setBloodGroup(text)}
+          onChangeText={() => setBloodGroup(BloodGroup.AB_POSITIVE)}
           style={[
             isEditable
               ? userInfoStyle.inputEnabled
@@ -217,15 +220,17 @@ const UserDetails = ({
 }) => {
   const [isAccountInfo, setIsAccountInfo] = useState(true);
   const [isEditable, setIsEditable] = isEditableHook;
-  const user = useAppSelector((state) => state.user);
+  const user = useUser();
   const dispatch = useAppDispatch();
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [mobileNo, setMobileNo] = useState(user.mobileNo);
-  const [dob, setDob] = useState(user.dob);
-  const [bloodGroup, setBloodGroup] = useState(user.bloodGroup);
-  const [height, setHeight] = useState(user.height);
-  const [weight, setWeight] = useState(user.weight);
+  const [name, setName] = useState(user.name ?? 'NA');
+  const [email, setEmail] = useState(user.email ?? 'NA');
+  const [mobileNumber, setMobileNumber] = useState(user.mobileNumber ?? 'NA');
+  const [dateOfBirth, setDateOfBirth] = useState(user.dateOfBirth ?? 'NA');
+  const [bloodGroup, setBloodGroup] = useState<BloodGroup>(
+    user.bloodGroup ?? BloodGroup.NA
+  );
+  const [height, setHeight] = useState(user.height ?? 'NA');
+  const [weight, setWeight] = useState(user.weight ?? 'NA');
   const [allergies, setAllergies] = useState(
     user.allergies ? user.allergies.join(',') : ''
   );
@@ -240,37 +245,34 @@ const UserDetails = ({
   const accountInfoHooks: AccountInfoFormHooks = {
     nameHook: [name, setName],
     emailHook: [email, setEmail],
-    mobileNoHook: [mobileNo, setMobileNo],
-    dobHook: [dob, setDob],
+    mobileNumberHook: [mobileNumber, setMobileNumber],
+    dateOfBirthHook: [dateOfBirth, setDateOfBirth],
   };
 
   const resetForm = (user: User) => {
     setName(user.name);
     setEmail(user.email);
-    setMobileNo(user.mobileNo);
-    setDob(user.dob);
-    setBloodGroup(user.bloodGroup);
-    setHeight(user.height);
-    setWeight(user.weight);
+    setMobileNumber(user.mobileNumber ?? 'NA');
+    setDateOfBirth(user.dateOfBirth);
+    setBloodGroup(user.bloodGroup ?? BloodGroup.NA);
+    setHeight(user.height ?? 'NA');
+    setWeight(user.weight ?? 'NA');
     setAllergies(user.allergies.join(','));
   };
 
   const submitForm = () => {
-    const updatedUser: User = {
-      id: nanoid(),
+    const updatedUser: UserUpdateAttribute = {
       name: name ? name : user.name,
       allergies: allergies ? allergies.trim().split(',') : user.allergies,
       bloodGroup: bloodGroup ? bloodGroup : user.bloodGroup,
-      dob: dob ? dob : user.dob,
+      dateOfBirth: dateOfBirth ? dateOfBirth : user.dateOfBirth,
       email: email ? email : user.email,
       height: height ? height : user.height,
-      mobileNo: mobileNo ? mobileNo : user.mobileNo,
+      mobileNumber: mobileNumber ? mobileNumber : user.mobileNumber,
       weight: weight ? weight : user.weight,
     };
-    const a = dispatch(updateUser(updatedUser));
-    console.log(a);
-
-    resetForm(updatedUser);
+    dispatch(updateUser(updatedUser));
+    resetForm(updatedUser as User);
     setIsEditable(false);
   };
   return (

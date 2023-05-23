@@ -1,17 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Label, TextInput } from '../components/common/Form';
 import {
   HeadingThree,
   HeadingTwo,
   Icon,
+  InfoMsg,
   PrimaryButton,
   Text,
 } from '../components/common';
 import { COLORS, SIZES } from '../constants/theme';
 import { AuthNavigationProps } from '../navigation/types';
+import { useAppDispatch, useAppSelector } from '../utils/hooks';
+import { ErrorMsg } from '../components/common/ErrorMsg';
+import {
+  isValidEmail,
+  isValidPassword,
+  isValidSSN,
+} from '../utils/validations';
+import { registerUser, SignUpAttriburte } from '../features/auth/authActions';
 
 const SignUp = ({ navigation }: AuthNavigationProps<'SignUp'>) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [ssn, setSSN] = useState(0);
+  const [error, setError] = useState('');
+
+  const {
+    error: registrationError,
+    loading,
+    success,
+  } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (success) {
+      navigation.navigate('AdditionalDetails');
+    }
+  }, [navigation, success]);
+
+  const submitForm = () => {
+    if (!name) {
+      setEmail('Invalid Name!');
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError('Invalid Email');
+      return;
+    }
+    if (!isValidSSN(ssn)) {
+      setError('Invalid SSN');
+      return;
+    }
+    if (!isValidPassword(password)) {
+      setError('Invalid Password');
+      return;
+    }
+
+    const draftUser: SignUpAttriburte = {
+      name,
+      email: email.toLowerCase(),
+      ssn: ssn.toString(),
+      password,
+    };
+    setError('');
+    dispatch(registerUser(draftUser));
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -47,28 +103,57 @@ const SignUp = ({ navigation }: AuthNavigationProps<'SignUp'>) => {
             </HeadingTwo>
           </View>
           <View style={{ marginBottom: 15 }}>
+            {registrationError && (
+              <View style={styles.inputContainer}>
+                <ErrorMsg msg={registrationError} />
+              </View>
+            )}
+            {error && (
+              <View style={styles.inputContainer}>
+                <ErrorMsg msg={error} />
+              </View>
+            )}
+            {loading && (
+              <View style={styles.inputContainer}>
+                <InfoMsg msg="Loading..." />
+              </View>
+            )}
             <View style={styles.inputContainer}>
               <Label style={{ marginBottom: 5 }}>Name</Label>
-              <TextInput placeholder="Name" />
+              <TextInput
+                value={name}
+                onChangeText={(t) => setName(t)}
+                placeholder="Name"
+              />
             </View>
             <View style={styles.inputContainer}>
               <Label style={{ marginBottom: 5 }}>Email</Label>
-              <TextInput placeholder="Email" />
+              <TextInput
+                value={email}
+                onChangeText={(t) => setEmail(t)}
+                placeholder="Email"
+              />
             </View>
             <View style={styles.inputContainer}>
               <Label style={{ marginBottom: 5 }}>SSN</Label>
-              <TextInput placeholder="SSN" />
+              <TextInput
+                value={ssn.toString()}
+                onChangeText={(t) => setSSN(+t)}
+                placeholder="SSN"
+                type="number"
+              />
             </View>
             <View style={styles.inputContainer}>
               <Label style={{ marginBottom: 5 }}>Password</Label>
-              <TextInput placeholder="Password" />
+              <TextInput
+                value={password}
+                onChangeText={(t) => setPassword(t)}
+                placeholder="Password"
+                type="password"
+              />
             </View>
           </View>
-          <PrimaryButton
-            onPress={() => navigation.navigate('AdditionalDetails')}
-          >
-            Sign Up
-          </PrimaryButton>
+          <PrimaryButton onPress={() => submitForm()}>Sign Up</PrimaryButton>
           <View
             style={{
               marginVertical: 15,

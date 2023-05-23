@@ -2,9 +2,10 @@ import type {
   BottomTabNavigationProp,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
-import type { RecordType } from '../components/record/types';
 import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Record } from '../features/records/recordsAction';
+
 export type AuthStackParamList = {
   SighIn: undefined;
   SignUp: undefined;
@@ -17,7 +18,7 @@ export type AuthNavigationProps<T extends keyof AuthStackParamList> =
 export type TabParamList = {
   Home: undefined;
   Records: undefined;
-  Record: RecordType;
+  Record: Record;
   Profile: undefined;
 };
 

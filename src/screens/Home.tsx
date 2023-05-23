@@ -7,6 +7,8 @@ import {
   QuickNavigation,
   RecentRecords,
 } from '../components/home';
+import { useAppDispatch } from '../utils/hooks';
+import { getRecords } from '../features/records/recordsAction';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,15 +20,19 @@ const styles = StyleSheet.create({
   scrollView: {},
 });
 
-const Home = () => (
-  <SafeAreaView style={styles.container}>
-    <Header />
-    <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
-      <Banner />
-      <QuickNavigation />
-      <RecentRecords />
-    </ScrollView>
-  </SafeAreaView>
-);
+const Home = () => {
+  const dispatch = useAppDispatch();
+  dispatch(getRecords());
+  return (
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
+        <Banner />
+        <QuickNavigation />
+        <RecentRecords />
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 export default Home;

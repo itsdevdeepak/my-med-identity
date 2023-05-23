@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Label, TextInput } from '../components/common/Form';
 import {
   HeadingThree,
   HeadingTwo,
   Icon,
+  InfoMsg,
   PrimaryButton,
   Text,
 } from '../components/common';
 import { COLORS, SIZES } from '../constants/theme';
 import { AuthNavigationProps } from '../navigation/types';
+import { useAppDispatch, useAppSelector } from '../utils/hooks';
+import { isValidEmail, isValidPassword } from '../utils/validations';
+import { signInUser } from '../features/auth/authActions';
+import { ErrorMsg } from '../components/common/ErrorMsg';
+import { POST_SIGNUP_STATUS } from '../features/auth/authSlice';
 
 const SignIn = ({ navigation }: AuthNavigationProps<'SighIn'>) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const { error, loading, user, postSignUp } = useAppSelector(
+    (state) => state.auth
+  );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user && postSignUp === POST_SIGNUP_STATUS.WAITING) {
+      navigation.navigate('AdditionalDetails');
+    }
+  });
+
+  const submitForm = () => {
+    if (!isValidEmail(email)) {
+      setErrorMsg('Invalid Email');
+      return;
+    }
+    if (!isValidPassword(password)) {
+      setErrorMsg('Invalid Password');
+      return;
+    }
+
+    setErrorMsg('');
+
+    dispatch(signInUser({ email, password }));
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -46,16 +81,40 @@ const SignIn = ({ navigation }: AuthNavigationProps<'SighIn'>) => {
             </HeadingTwo>
           </View>
           <View style={{ marginBottom: 15 }}>
+            {error && (
+              <View style={styles.inputContainer}>
+                <ErrorMsg msg={error} />
+              </View>
+            )}
+            {errorMsg && (
+              <View style={styles.inputContainer}>
+                <ErrorMsg msg={errorMsg} />
+              </View>
+            )}
+            {loading && (
+              <View style={styles.inputContainer}>
+                <InfoMsg msg="Loading..." />
+              </View>
+            )}
             <View style={styles.inputContainer}>
               <Label style={{ marginBottom: 5 }}>Email or Username</Label>
-              <TextInput placeholder="Email or Username" />
+              <TextInput
+                value={email}
+                onChangeText={(t) => setEmail(t)}
+                placeholder="Email or Username"
+              />
             </View>
             <View style={styles.inputContainer}>
               <Label style={{ marginBottom: 5 }}>Password</Label>
-              <TextInput placeholder="Password" type="password" />
+              <TextInput
+                value={password}
+                onChangeText={(t) => setPassword(t)}
+                placeholder="Password"
+                type="password"
+              />
             </View>
           </View>
-          <PrimaryButton>Sign In</PrimaryButton>
+          <PrimaryButton onPress={() => submitForm()}>Sign In</PrimaryButton>
           <View
             style={{
               marginVertical: 15,

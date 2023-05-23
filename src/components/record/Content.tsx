@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { RecordType } from './types';
 import { Button, HeadingTwo, Tag, Text } from '../common';
 import { COLORS } from '../../constants/theme';
+import { Record } from '../../features/records/recordsAction';
 
 const contentStyles = StyleSheet.create({
   container: {
@@ -42,22 +42,16 @@ const contentStyles = StyleSheet.create({
   },
 });
 
-const Content = ({
-  name,
-  allergies,
-  tagName,
-  discription,
-  reportUrl,
-}: RecordType) => {
+const Content = ({ name, allergies, date, description, fileUrl }: Record) => {
   return (
     <View style={contentStyles.container}>
       <View style={{ marginBottom: 10 }}>
         <HeadingTwo bold style={contentStyles.name}>
           {name}
         </HeadingTwo>
-        <Text style={contentStyles.tagName}>{tagName}</Text>
+        <Text style={contentStyles.tagName}>{date}</Text>
       </View>
-      <Text style={contentStyles.description}>{discription}</Text>
+      <Text style={contentStyles.description}>{description}</Text>
       <View style={contentStyles.tags}>
         <Text bold style={contentStyles.tagTitle}>
           Allergies
@@ -76,9 +70,9 @@ const Content = ({
           </View>
         </ScrollView>
       </View>
-      {reportUrl && (
+      {fileUrl && (
         <View style={contentStyles.imageContainer}>
-          <Image source={{ uri: reportUrl }} />
+          <Image source={{ uri: fileUrl }} />
         </View>
       )}
       <View style={contentStyles.buttons}>

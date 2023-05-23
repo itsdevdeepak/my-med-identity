@@ -6,3 +6,4 @@ export * from './QuickNavigationCard';
 export * from './Tag';
 export * from './Option';
 export * from './RecordList';
+export * from './InfoMsg';

@@ -3,11 +3,10 @@ import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { HeadingTwo, Icon, Text } from '../common';
 import { COLORS, SIZES } from '../../constants/theme';
 import { OptionMenu } from '../common/OptionMenu';
+import { useAppDispatch, useUser } from '../../utils/hooks';
+import { logOut } from '../../features/auth/authSlice';
 
 type HeaderProps = {
-  name: string;
-  email: string;
-  imageUrl?: string;
   isEditableHook: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 };
 
@@ -48,9 +47,11 @@ const headerStyles = StyleSheet.create({
   },
 });
 
-const Header = ({ name, email, isEditableHook }: HeaderProps) => {
+const Header = ({ isEditableHook }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEditable, setIsEditable] = isEditableHook;
+  const dispatch = useAppDispatch();
+  const user = useUser();
   const bgMale = '#12d9e3';
   const bgFemale = '#babffc';
   const gender = 'male';
@@ -70,9 +71,9 @@ const Header = ({ name, email, isEditableHook }: HeaderProps) => {
         </View>
         <View>
           <HeadingTwo bold style={headerStyles.nameText}>
-            {name}
+            {user.name}
           </HeadingTwo>
-          <Text style={headerStyles.emailText}>{email}</Text>
+          <Text style={headerStyles.emailText}>{user.email}</Text>
         </View>
       </View>
       <View style={headerStyles.optionMenuContainer}>
@@ -96,7 +97,10 @@ const Header = ({ name, email, isEditableHook }: HeaderProps) => {
           <OptionMenu.Item
             danger
             name="Logout"
-            onPress={() => setIsMenuOpen(false)}
+            onPress={() => {
+              setIsMenuOpen(false);
+              dispatch(logOut());
+            }}
           />
         </OptionMenu>
       </View>
