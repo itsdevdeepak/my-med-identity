@@ -6,8 +6,6 @@
 
 My Med Identity is a personilized Mobile app that lets you store and manage your personal medical Records.
 
-
-
 ## Run Locally
 
 [**Setup Backend 🔗**](https://github.com/itsdevdeepak/my-med-identity-backend)
@@ -32,7 +30,10 @@ Install dependencies
 ```
 
 Add Enviroment Variables
-rename .env.sample to .env and add your api url in .env
+
+```bash
+  cat API_URL=<your api url> > .env
+```
 
 Start the server
 
